@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+tensorflow==2.15.0
+torch==2.2.2
+transformers==4.40.0
+Pillow==10.3.0
+python-multipart==0.0.9
+h5py==3.10.0
+accelerate==0.29.3  # Needed for SigLIP
