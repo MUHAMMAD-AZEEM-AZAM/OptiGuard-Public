@@ -21,7 +21,7 @@ To remove the need for a separate filter model, non-fundus images were added as 
 - Normal
 - Non-Fundus
 
-This single model reached **99.1% validation accuracy**, handling filtering and disease classification in one step.
+This single model reached **99.12% test accuracy** on the test split, handling filtering and disease classification in one step.
 
 ---
 
@@ -31,7 +31,7 @@ This single model reached **99.1% validation accuracy**, handling filtering and 
 | :--- | :--- | :--- |
 | [`Preprocessing.ipynb`](Preprocessing.ipynb) | Image preprocessing and data augmentation | - LAB color space conversion and CLAHE contrast enhancement<br>- Gaussian blur denoising and edge sharpening<br>- Augmentations to handle class imbalance: rotations (-25 to +25 degrees), horizontal flips, brightness and contrast scaling, Gaussian noise, and random cropping/rescaling |
 | [`VGGNet.ipynb`](VGGNet.ipynb) | VGG-16 model training | - Trained on augmented dataset<br>- 98.61% test accuracy, 98.53% validation accuracy (Test loss: 0.0409)<br>- Used in the FastAPI backend service |
-| [`EfficientNetOptiguard.ipynb`](EfficientNetOptiguard.ipynb) | 4-class EfficientNet-B0 training and inference | - PyTorch implementation with EfficientNet-B0<br>- 4 classes: DR, Glaucoma, Normal, Non-Fundus<br>- 99.1% validation accuracy<br>- Includes checkpoint saving, confusion matrix evaluation, and single-image inference |
+| [`EfficientNetOptiguard.ipynb`](EfficientNetOptiguard.ipynb) | 4-class EfficientNet-B0 training and inference | - PyTorch implementation with EfficientNet-B0<br>- 4 classes: DR, Glaucoma, Normal, Non-Fundus<br>- 99.12% test accuracy<br>- Includes checkpoint saving, confusion matrix evaluation on test split, and single-image inference |
 
 ---
 
@@ -41,12 +41,23 @@ This single model reached **99.1% validation accuracy**, handling filtering and 
 | :--- | :--- | :--- |
 | Model | SigLIP2 filter + VGG-16 classifier | EfficientNet-B0 |
 | Classes | 3 classes (DR, Glaucoma, Normal) | 4 classes (DR, Glaucoma, Normal, Non-Fundus) |
-| Performance | 98.61% test accuracy (VGG-16) | 99.1% validation accuracy |
+| Performance | 98.61% test accuracy (VGG-16) | 99.12% test accuracy |
 | Filtering | Handled by upstream SigLIP2 filter | Handled directly by classifier |
 | Implementation | [`VGGNet.ipynb`](VGGNet.ipynb), `fastapi-backend/` | [`EfficientNetOptiguard.ipynb`](EfficientNetOptiguard.ipynb) |
 
 ### VGG-16 Training Results
 ![VGG-16 Accuracy](Website%20Demo%20Images/VGG16Accuracy.png)
+
+### EfficientNet-B0 Test Results
+- Test Accuracy: 99.12%
+
+```text
+Confusion Matrix:
+[[921   0   0   0]
+ [  0 267   0   3]
+ [  0   0 146   0]
+ [  0  10   0 128]]
+```
 
 ---
 
